@@ -1,0 +1,36 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "amzn2-ami-hvm-*-x86_64-gp2",
+          "root-device-type": "ebs"
+        },
+        "owners": ["amazon"],
+        "most_recent": true
+      },
+      "instance_type": "t3.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "packer-amzn2_{{timestamp}}",
+      "tags": {
+        "Name": "packer-amzn2_{{timestamp}}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "../ansible-samples/playbooks/common.yml",
+      "ansible_env_vars": ["ANSIBLE_CONFIG=../ansible-samples/ansible.cfg"]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo yum -y update",
+        "logger hogehoge"
+      ]
+    }
+  ]
+}
