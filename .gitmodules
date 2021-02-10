@@ -1,0 +1,3 @@
+[submodule "ansible-samples"]
+	path = ansible-samples
+	url = git@github.com:megun/ansible-samples.git
